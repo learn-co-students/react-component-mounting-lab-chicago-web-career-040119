@@ -10,10 +10,15 @@ class Timer extends Component {
   // add your code here
 
 
+  componentDidMount() {
+    this.interval = setInterval(this.clockTick.bind(this), 1000)
+  }
 
 
-
-
+  componentWillUnmount() {
+    console.log("componentWillUnmount fired")
+    this.stopClock()
+  }
 
   render() {
 
@@ -35,6 +40,7 @@ class Timer extends Component {
     this.setState(prevState => ({
       time: prevState.time+1
     }))
+    console.log(this.state.time)
   }
 
   stopClock = () => {
