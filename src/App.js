@@ -17,7 +17,9 @@ class App extends Component {
 
 
 
-
+componentDidMount(){
+  this.handleAddTimer()
+}
 
 
   // No need to modify anything in render or the class methods below
