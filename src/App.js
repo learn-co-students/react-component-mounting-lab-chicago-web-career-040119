@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Timer from './Timer'
 
 class App extends Component {
@@ -10,15 +9,33 @@ class App extends Component {
   }
 
 
-  //Your code here:
+    //Your code here:
+    componentDidMount() {
+      this.handleAddTimer()
+    }
 
+    componentWillUnmount() {
+      clearInterval(this.interval)
+    }
 
+    // returns array of components written in JSX, mapped from this.state.timerIDs
+    renderTimers = () => this.state.timerIDs.map(id => {
+      return <Timer key={id} id={id} removeTimer={this.removeTimer} />
+    })
 
+    // adds a random number for timer ID
+    handleAddTimer = () => {
+      this.setState(prevState => ({
+        timerIDs: [...prevState.timerIDs, Math.floor(Math.random()*1000)]
+      }))
+    }
 
-
-
-
-
+    // removeTimer updates state, removing any timer that matches the provided author
+    removeTimer = id => {
+      this.setState(prevState => ({
+        timerIDs: prevState.timerIDs.filter(timer_id => timer_id !== id)
+      }))
+    }
 
   // No need to modify anything in render or the class methods below
   // Unless, of course, you're curious about how it all works
@@ -36,26 +53,6 @@ class App extends Component {
       </div>
     );
   }
-
-  // returns array of components written in JSX, mapped from this.state.timerIDs
-  renderTimers = () => this.state.timerIDs.map(id => {
-    return <Timer key={id} id={id} removeTimer={this.removeTimer} />
-  })
-
-  // adds a random number for timer ID
-  handleAddTimer = () => {
-    this.setState(prevState => ({
-      timerIDs: [...prevState.timerIDs, Math.floor(Math.random()*1000)]
-    }))
-  }
-
-  // removeTimer updates state, removing any timer that matches the provided author
-  removeTimer = id => {
-    this.setState(prevState => ({
-      timerIDs: prevState.timerIDs.filter(timer_id => timer_id !== id)
-    }))
-  }
-
 
 }
 
